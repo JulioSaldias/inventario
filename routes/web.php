@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\inicioController;
 use App\Http\Controllers\productoController;
 use App\Http\Controllers\categoriaController;
-
+use App\Http\Controllers\RoleController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,5 +61,19 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::delete('categoria/{id}', 'borrar')->name('categoria.borrar');
         Route::get('desactiva-categoria/{id}', 'desactivacategoria')->name('desactivacat');
         Route::get('activa-categoria/{id}', 'activacategoria')->name('activacat');
+    });
+});
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::controller(RoleController::class)->group(function () {
+        Route::get('role', 'principal')->name('role.principal');
+        Route::get('role/crear', 'crear')->name('role.crear');
+        Route::post('role', 'store')->name('role.store');
+        Route::get('role/{variable}', 'mostrar')->name('role.mostrar');
+        Route::get('role/{role}/edit', 'editar')->name('role.editar');
+        Route::put('role/{role}', 'update')->name('role.update');
+        Route::delete('role/{id}', 'borrar')->name('role.borrar');
+        Route::get('desactiva-role/{id}', 'desactivarole')->name('desactivarole');
+        Route::get('activa-role/{id}', 'activarole')->name('activarole');
     });
 });
