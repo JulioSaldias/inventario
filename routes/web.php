@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\inicioController;
 use App\Http\Controllers\productoController;
+use App\Http\Controllers\categoriaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,4 +48,18 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     
     });
 
+});
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    Route::controller(categoriaController::class)->group(function () {
+        Route::get('categoria', 'principal')->name('categoria.principal');
+        Route::get('categoria/crear',  'crear')->name('categoria.crear');
+        Route::post('categoria',  'store')->name('categoria.store');
+        Route::get('categoria/{variable}',  'mostrar')->name('categoria.mostrar');
+        Route::get('categoria/{categoria}/edit',  'editar')->name('categoria.editar');
+        Route::put('categoria/{categoria}', 'update')->name('categoria.update');
+        Route::delete('categoria/{id}', 'borrar')->name('categoria.borrar');
+        Route::get('desactiva-categoria/{id}', 'desactivacategoria')->name('desactivacat');
+        Route::get('activa-categoria/{id}', 'activacategoria')->name('activacat');
+    });
 });
